@@ -24,10 +24,7 @@ gunzip Bitcoin_addresses_LATEST.txt.gz || {
 echo 'gunziped'
 
 echo 'removing gz is started...'
-rm Bitcoin_addresses_LATEST.txt.gz || {
-    echo 'rm Bitcoin_addresses_LATEST.txt.gz failed'; 
-    exit 1;
-}
+rm Bitcoin_addresses_LATEST.txt.gz
 echo 'deleted'
 
 # terminal current memcached
@@ -37,10 +34,7 @@ echo 'killed'
 
 # remove previous data.txt
 echo 'removing previous data.txt...'
-rm data.txt || {
-    echo 'rm data.txt failed';
-    exit 1;
-}
+rm data.txt
 echo 'deleted'
 
 # put new data.txt
@@ -53,10 +47,7 @@ echo 'renamed'
 
 # clean up
 echo 'removing Bitcoin_addresses_LATEST.txt...'
-rm Bitcoin_addresses_LATEST.txt || {
-    echo 'rm Bitcoin_addresses_LATEST.txt failed';
-    exit 1;
-}
+rm Bitcoin_addresses_LATEST.txt
 echo 'removed'
 
 echo 'starting new magic...'
