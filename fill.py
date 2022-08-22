@@ -24,15 +24,15 @@ import time
 
 DATABASE_PATH = r'data.txt'
 
-sanity_1_i = random.randint(0, 34000000)
-sanity_2_i = random.randint(0, 34000000)
+sanity_1_i = random.randint(0, 42000000)
+sanity_2_i = random.randint(0, 42000000)
 sanity_1_s = ''
 sanity_1_s = ''
 
 print('connect memcached...')
 client = base.Client(('localhost', 11211))
 print('Loading and injecting database')
-print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
 startTime = time.time()
 
 i_add = 0
@@ -50,7 +50,6 @@ while True:
         if i_add == sanity_2_i:
             sanity_2_s = i.rstrip('\n')
     client.set_multi(dict.fromkeys(alist, 1), expire=0)
-    # client.set(line, '1', expire = 0)
     print('\raddresses: ' + str(i_add), end=' ')
 
 f.close()

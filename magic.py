@@ -152,7 +152,7 @@ def process(keys_list):
     if keys_ret:
         print(keys_ret)
         print(keys_list)
-        with open('plutus.txt', 'a') as file:
+        with open('pluto.txt', 'a') as file:
             for i in keys_list:
                 file.write(str(keys_ret))
                 file.write(str(keys_list))
