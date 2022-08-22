@@ -50,5 +50,5 @@ echo 'removing Bitcoin_addresses_LATEST.txt...'
 rm Bitcoin_addresses_LATEST.txt
 echo 'removed'
 
-echo 'starting new magic...'
+echo 'starting magic...'
 sh start.sh
