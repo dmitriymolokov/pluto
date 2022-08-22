@@ -1,4 +1,4 @@
-# Scroo Bitcoin Brute Forcer, memcached workaround the memory issue and fixed keygen
+# magic Bitcoin Brute Forcer, memcached workaround the memory issue and fixed keygen
 
 A Bitcoin wallet collider that brute forces random wallet addresses from a databases of known addresses
 
@@ -46,11 +46,8 @@ You can install the Python dependencies using pip.
 # Quick Start
 
 ```
-$ memcached -n 70 -m 4096 -M -t 12
-$ python3 filldb-text.py && python3 scroo.py
-
-addresses with balance
-http://addresses.loyce.club
+$ sh update_data.sh (if needed)
+$ sh start.sh
 ```
 Note: depending on the current size of the database you may need to adjust the -m option on memcached.
 
@@ -62,7 +59,7 @@ This program is essentially a brute forcing algorithm. It continuously generates
 
 # Efficiency
 
-The efficiency of scroo has not been tested. You are welcome to post results and improve upon them.
+The efficiency of magic has not been tested. You are welcome to post results and improve upon them.
 Sanity checks happen against a known address in the database on each thread after 100k requests if it fails the program exits as this may mean a problem with memcached.
 Loading from pickles to memcached to slow, this needs to be worked on
 
@@ -93,10 +90,10 @@ This program uses approximately 4.1GB of RAM (with current database) total + som
 
 - [X] Fixed memory use
 - [X] Fixed keygen
-- [X] Split database loading from rest of code so "client" machines can now be used by changing connection IP in scroo.py
+- [X] Split database loading from rest of code so "client" machines can now be used by changing connection IP in magic.py
 - [X] Display some stats
 - [X] Improve loading times, now supports reading directly for data.txt (expect 3mn to load about 38 million addresses from data.txt)
 - [X] Check performance, performance is better with an older version of memcached on Windows. numba doesn't change performance if anything it is slower.
-- [X] Fixed sanity checking, see scroo.py and filldb-text.py
+- [X] Fixed sanity checking, see magic.py and filldb-text.py
 - [ ] Ensure proper RAM usage/size for memcached vs database
 - [ ] Optimize code

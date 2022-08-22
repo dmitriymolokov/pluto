@@ -1,5 +1,3 @@
-data.txt
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -129,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+Bitcoin_addresses_LATEST.txt.gz
+.gitignore
+data.txt
+.DS_Store
+sanity.txt
