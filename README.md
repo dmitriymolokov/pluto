@@ -2,18 +2,6 @@
 
 A Bitcoin wallet collider that brute forces random wallet addresses from a databases of known addresses
 
-# PLEASE NOTE: It is quite unlikely you will find a working address like this; the number of potential addresses used by Bitcoin is enormous, as in, you'd need billion of years of processing. This is mostly an exercise in optimization, it is very unlikely to make you rich.
-
-# About This Fork
-
-Workaround for memory usage using memcached. Also fixes/replaces Plutus' keygen 
-
-BEWARE: MANY BUGS MAY YET STILL LURK, please review code carefully before using for production
-
-See the TODO list at the bottom for potential issues
-
-PLEASE NOTE: filldb.py (from pickle files) is no longer supported. filldb-text.py is the way to go using a text file containing the addresses to be tested against.
-
 # About memcached
 
 You will need to download a 64bit version of memcached. 
@@ -24,20 +12,6 @@ Thus at this time on Windows 10 the version of memcached I would recommend can b
 # Warning for Linux users
 
 It is possible that your distro might already be running an instance of memcached with limited parameters, in which case this will interfere. You'll need to check your distro to establish what parameters the built-in memcached is running with and adjust accordingly.
-
-
-
-# Wanna Support Me?
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G758OLF)
-
-```
-Please consider kind support !
-
-BTC: bc1q5gkn0tln6su3tvwnld7xf7p20fjssaufles47d
-ETH: 0xD7A75bF1b64e302ad07b0843A9D295F9a9E3db8E
-DOT: 146LV65VWKxM3HsGWNMdjvB3YKg7JHYnRkeX2K3vSTJYxsdB 
-```
 
 # Install
 You will need Python 3 with pymemcache and ecdsa, along with a good version of memcached as mentionned above.
@@ -85,15 +59,3 @@ However, if a wallet with a balance is found, then all necessary information abo
 # Memory Consumption
 
 This program uses approximately 4.1GB of RAM (with current database) total + some overhead (about 8 megs) for each core/cpu. 
-
-# Recent Improvements & TODO
-
-- [X] Fixed memory use
-- [X] Fixed keygen
-- [X] Split database loading from rest of code so "client" machines can now be used by changing connection IP in magic.py
-- [X] Display some stats
-- [X] Improve loading times, now supports reading directly for data.txt (expect 3mn to load about 38 million addresses from data.txt)
-- [X] Check performance, performance is better with an older version of memcached on Windows. numba doesn't change performance if anything it is slower.
-- [X] Fixed sanity checking, see magic.py and filldb-text.py
-- [ ] Ensure proper RAM usage/size for memcached vs database
-- [ ] Optimize code
