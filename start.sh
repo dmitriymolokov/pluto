@@ -1,4 +1,3 @@
-# terminal memcached
 sh terminate.sh
 
 sleep 10
@@ -22,7 +21,7 @@ python3 fill.py || {
 sleep 5
 
 # start magic
-echo 'loading magic'
+echo 'starting magic'
 python3 magic.py || {
     echo 'python3 magic.py'; 
     exit 1;
