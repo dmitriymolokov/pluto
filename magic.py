@@ -157,14 +157,13 @@ def process(keys_list):
                 file.write(str(keys_ret))
                 file.write(str(keys_list))
         print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
-        print('🤑🤑🤑 GOT ONE 🤑🤑🤑')
+        print('GOT ONE')
 
 
 ################################# THREAD CODE #################################
 def main(sanity_1_s, sanity_2_s):
     max_sanity_check = int((100000/max_keys)-1)
     sanity_check = max_sanity_check+1
-    #print('max sanity check: ' + str(max_sanity_check))
     while True:
         keys_t = keygen(max_keys)
         process(keys_t)
@@ -202,7 +201,6 @@ if __name__ == '__main__':
         multiprocessing.Process(target=main, args=(
             sanity_1_s, sanity_2_s)).start()
     while True:
-        time.sleep(60)
         stats = client.stats()
         print(
             '\r '
@@ -214,3 +212,4 @@ if __name__ == '__main__':
             + ' MPS: ' + str(round(stats.get(b'get_misses') / stats.get(b'uptime'), 2)), end=' ')
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
+        time.sleep(60)

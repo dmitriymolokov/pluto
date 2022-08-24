@@ -131,5 +131,6 @@ dmypy.json
 Bitcoin_addresses_LATEST.txt.gz
 .gitignore
 data.txt
+data.tsv
 .DS_Store
 sanity.txt

@@ -23,8 +23,6 @@ You can install the Python dependencies using pip.
 $ sh update_data.sh (if needed)
 $ sh start.sh
 ```
-Note: depending on the current size of the database you may need to adjust the -m option on memcached.
-
 # Proof Of Concept
 
 A private key is a secret number that allows Bitcoins to be spent. If a wallet has Bitcoins in it, then the private key will allow a person to control the wallet and spend whatever balance the wallet has. So this program attempts to find Bitcoin private keys that correlate to wallets with positive balances. However, because it is impossible to know which private keys control wallets with money and which private keys control empty wallets, we have to randomly look at every possible private key that exists and hope to find one that has a balance.

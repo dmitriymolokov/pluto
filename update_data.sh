@@ -1,31 +1,23 @@
 # clear old files if needed
-echo 'removing old gz if exists...'
-rm Bitcoin_addresses_LATEST.txt.gz
-echo 'deleted'
-
-echo 'removing old Bitcoin_addresses_LATEST.txt if exists...'
-rm Bitcoin_addresses_LATEST.txt
-echo 'removed'
+echo 'removing old files if exists...'
+rm blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz
+rm blockchair_bitcoin_addresses_and_balance_LATEST.tsv
 
 # downloading new
 echo 'downloading is started...'
-curl -O http://addresses.loyce.club/Bitcoin_addresses_LATEST.txt.gz || {
-    echo 'curl -O http://addresses.loyce.club/Bitcoin_addresses_LATEST.txt.gz failed';
+curl -O http://addresses.loyce.club/blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz || {
+    echo 'curl -O http://addresses.loyce.club/blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz failed';
     exit 1;
 }
 echo 'downloaded'
 
 # gunzip
 echo 'gunzip is started...'
-gunzip Bitcoin_addresses_LATEST.txt.gz || {
+gunzip blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz || {
     echo 'gunzip Bitcoin_addresses_LATEST.txt.gz failed';
     exit 1;
 }
 echo 'gunziped'
-
-echo 'removing gz is started...'
-rm Bitcoin_addresses_LATEST.txt.gz
-echo 'deleted'
 
 # terminal current memcached
 echo 'killing current session pids...'
@@ -34,20 +26,21 @@ echo 'killed'
 
 # remove previous data.txt
 echo 'removing previous data.txt...'
-rm data.txt
+rm data.tsv
 echo 'deleted'
 
 # put new data.txt
 echo 'renaming new addresses to data.txt...'
-mv Bitcoin_addresses_LATEST.txt data.txt || {
-    echo 'mv Bitcoin_addresses_LATEST.txt data.txt';
+mv blockchair_bitcoin_addresses_and_balance_LATEST.tsv data.tsv || {
+    echo 'mv Bitcoin_addresses_LATEST.txt data.txt falied';
     exit 1;
 }
 echo 'renamed'
 
-# clean up
-echo 'removing Bitcoin_addresses_LATEST.txt...'
-rm Bitcoin_addresses_LATEST.txt
+# clear old files if needed
+echo 'removing old files if exists...'
+rm blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz
+rm blockchair_bitcoin_addresses_and_balance_LATEST.tsv
 echo 'removed'
 
 echo 'starting magic...'

@@ -22,10 +22,10 @@ from pymemcache.client import base
 from datetime import datetime
 import time
 
-DATABASE_PATH = r'data.txt'
+DATABASE_PATH = r'data.tsv'
 
-sanity_1_i = random.randint(0, 42000000)
-sanity_2_i = random.randint(0, 42000000)
+sanity_1_i = random.randint(0, 9630000)
+sanity_2_i = random.randint(0, 9630000)
 sanity_1_s = ''
 sanity_1_s = ''
 
@@ -42,13 +42,20 @@ while True:
     lines = f.readlines(32768)
     if not lines:
         break
-    for i in lines:
-        alist.append(i.rstrip('\n'))
+    for line in lines:
+        parts = line.split()
+        address = parts[0]
+        balance = parts[1]
+        if address.startswith('1') == False:
+            continue
+        if int(balance) < 100000:
+            continue
+        alist.append(address)
         i_add += 1
         if i_add == sanity_1_i:
-            sanity_1_s = i.rstrip('\n')
+            sanity_1_s = address
         if i_add == sanity_2_i:
-            sanity_2_s = i.rstrip('\n')
+            sanity_2_s = address
     client.set_multi(dict.fromkeys(alist, 1), expire=0)
     print('\raddresses: ' + str(i_add), end=' ')
 
