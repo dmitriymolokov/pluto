@@ -34,7 +34,7 @@ rm data.tsv
 echo 'deleted'
 
 # put new data.tsv
-echo 'renaming new addresses to data.txt...'
+echo 'renaming new addresses to data.tsv...'
 mv blockchair_bitcoin_addresses_and_balance_LATEST.tsv data.tsv || {
     echo 'mv blockchair_bitcoin_addresses_and_balance_LATEST.tsv data.tsv';
     exit 1;
