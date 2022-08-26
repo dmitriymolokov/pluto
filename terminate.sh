@@ -1,4 +1,4 @@
 echo 'killing all python and memcached instances'
-killall python
-killall memcached
+sudo killall python
+sudo killall memcached
 echo 'killed'
