@@ -27,7 +27,8 @@ from datetime import datetime
 from pymemcache.client import base
 
 client = base.Client(('localhost', 11211))
-max_processes = int(multiprocessing.cpu_count())
+max_processes = int(multiprocessing.cpu_count() -
+                    (multiprocessing.cpu_count() / 4))
 max_keys = 32
 sanity_1_s = ''
 sanity_2_s = ''
@@ -212,4 +213,4 @@ if __name__ == '__main__':
             + ' MPS: ' + str(round(stats.get(b'get_misses') / stats.get(b'uptime'), 2)), end=' ')
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        time.sleep(15)
+        time.sleep(5)

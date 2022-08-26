@@ -11,8 +11,8 @@ sleep 5
 
 # start new memcached
 echo 'starting new memcached instances'
-memcached -n 108 -m 7168 -M -t 24 -d || {
-    echo 'memcached -n 70 -m 4096 -M -t 12 -d '; 
+memcached -n 70 -m 1639 -M -t 12 -d || {
+    echo 'memcached -n 70 -m 1639 -M -t 12 -d failed'; 
     exit 1;
 }
 
@@ -22,7 +22,7 @@ sleep 5
 # load addresses in memcached
 echo 'loading addresses in memcached'
 python3 fill.py || {
-    echo 'python3 fill.py'; 
+    echo 'python3 fill.py failed'; 
     exit 1;
 }
 
@@ -32,6 +32,6 @@ sleep 5
 # start magic
 echo 'starting magic'
 python3 magic.py || {
-    echo 'python3 magic.py'; 
+    echo 'python3 magic.py failed'; 
     exit 1;
 }
