@@ -212,4 +212,4 @@ if __name__ == '__main__':
             + ' MPS: ' + str(round(stats.get(b'get_misses') / stats.get(b'uptime'), 2)), end=' ')
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        time.sleep(1)
+        time.sleep(15)
