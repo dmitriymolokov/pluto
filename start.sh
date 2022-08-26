@@ -1,7 +1,8 @@
 # print found results 
 if [ -s pluto.txt ]; then
-     echo "🟢🟢🟢 File is not empty 🟢🟢🟢"
+     echo "🟢🟢🟢"
      cat pluto.txt
+     echo "🟢🟢🟢"
 fi
 
 sh terminate.sh
