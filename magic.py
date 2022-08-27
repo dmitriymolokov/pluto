@@ -27,8 +27,7 @@ from datetime import datetime, timedelta
 from pymemcache.client import base
 
 client = base.Client(('localhost', 11211))
-max_processes = int(multiprocessing.cpu_count() -
-                    (multiprocessing.cpu_count() / 4))
+max_processes = int(multiprocessing.cpu_count() / 4 * 3)
 max_keys = 32
 sanity_1_s = ''
 sanity_2_s = ''
@@ -188,29 +187,36 @@ def main(sanity_1_s, sanity_2_s):
 
 ################################# ENTRY, DATA LOAD, THREAD START #################################
 if __name__ == '__main__':
-    cooldown_time = datetime.now() + timedelta(minutes=15)
-    print('available threads: ' + str(max_processes))
-    cpu = 0
+
     f = open('sanity.txt', 'r')
     sanity_1_s = f.readline().strip()
     sanity_2_s = f.readline().strip()
     f.close()
+
     print('sanities: ' + sanity_1_s + ' ' + sanity_2_s)
     print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+    print('available threads: ' + str(max_processes))
+
+    cooldown_time = datetime.now() + timedelta(seconds=25)
+    cpu = 0
+
     while cpu < max_processes:
         cpu = cpu + 1
-        pr = multiprocessing.Process(target=main, args=(
-            sanity_1_s, sanity_2_s))
+        pr = multiprocessing.Process(
+            target=main, args=(sanity_1_s, sanity_2_s))
         pr.daemon = True
         pr.start()
+
     while True:
         diff = cooldown_time - datetime.now()
+        print('\r ' + str(diff.seconds))
         if diff.seconds <= 0:
             for pr in multiprocessing.active_children():
                 pr.terminate()
                 pr.kill()
                 pr.join()
                 pr.close()
+            print('magic exiting')
             os._exit(0)
         stats = client.stats()
         print(
@@ -221,4 +227,4 @@ if __name__ == '__main__':
             + ' MPS: ' + str(round(stats.get(b'get_misses') / stats.get(b'uptime'), 2)), end=' ')
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        time.sleep(15)
+        time.sleep(1)
