@@ -27,7 +27,8 @@ from datetime import datetime, timedelta
 from pymemcache.client import base
 
 client = base.Client(('localhost', 11211))
-max_processes = int(multiprocessing.cpu_count() / 2)
+max_processes = int(multiprocessing.cpu_count() -
+                    (multiprocessing.cpu_count() / 2))
 max_keys = 32
 sanity_1_s = ''
 sanity_2_s = ''
@@ -157,21 +158,14 @@ def process(keys_list):
                 file.write(str(keys_ret))
                 file.write(str(keys_list))
         print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
-        print('GOT ONE')
+        print('🟡🟡🟡 GOT ONE 🟡🟡🟡')
 
 
 ################################# THREAD CODE #################################
 def main(sanity_1_s, sanity_2_s):
-    cooldown_time_delta = timedelta(minutes=25)
-    sleep_time = 60 * 5
-    next_cooldown_time = datetime.now() + cooldown_time_delta
     max_sanity_check = int((100000/max_keys)/2)
     sanity_check = max_sanity_check+1
     while True:
-        diff = next_cooldown_time - datetime.now()
-        if diff.seconds <= 0:
-            time.sleep(sleep_time)
-            next_cooldown_time = datetime.now() + cooldown_time_delta
         keys_t = keygen(max_keys)
         process(keys_t)
         if sanity_check > max_sanity_check:
@@ -194,6 +188,7 @@ def main(sanity_1_s, sanity_2_s):
 
 ################################# ENTRY, DATA LOAD, THREAD START #################################
 if __name__ == '__main__':
+    cooldown_time = datetime.now() + timedelta(minutes=15)
     print('available threads: ' + str(max_processes))
     cpu = 0
     f = open('sanity.txt', 'r')
@@ -204,9 +199,19 @@ if __name__ == '__main__':
     print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     while cpu < max_processes:
         cpu = cpu + 1
-        multiprocessing.Process(target=main, args=(
-            sanity_1_s, sanity_2_s)).start()
+        pr = multiprocessing.Process(target=main, args=(
+            sanity_1_s, sanity_2_s))
+        pr.daemon = True
+        pr.start()
     while True:
+        diff = cooldown_time - datetime.now()
+        if diff.seconds <= 0:
+            for pr in multiprocessing.active_children():
+                pr.terminate()
+                pr.kill()
+                pr.join()
+                pr.close()
+            os._exit(0)
         stats = client.stats()
         print(
             '\r '
