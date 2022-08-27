@@ -204,7 +204,6 @@ if __name__ == '__main__':
     print('sanities: ' + sanity_1_s + ' ' + sanity_2_s)
     print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     while cpu < max_processes:
-        print('thread spawned: ' + str(cpu))
         cpu = cpu + 1
         multiprocessing.Process(target=main, args=(
             sanity_1_s, sanity_2_s)).start()
