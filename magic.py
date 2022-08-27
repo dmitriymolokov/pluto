@@ -28,7 +28,7 @@ from pymemcache.client import base
 
 client = base.Client(('localhost', 11211))
 max_processes = int(multiprocessing.cpu_count() -
-                    (multiprocessing.cpu_count() / 2))
+                    (multiprocessing.cpu_count() / 4))
 max_keys = 32
 sanity_1_s = ''
 sanity_2_s = ''
