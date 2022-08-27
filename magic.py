@@ -23,7 +23,7 @@ import codecs
 import ecdsa
 import time
 import multiprocessing
-from datetime import datetime
+from datetime import datetime, timedelta
 from pymemcache.client import base
 
 client = base.Client(('localhost', 11211))
@@ -163,9 +163,16 @@ def process(keys_list):
 
 ################################# THREAD CODE #################################
 def main(sanity_1_s, sanity_2_s):
+    cooldown_time_delta = timedelta(minutes=27)
+    sleep_time = 60 * 3
+    next_cooldown_time = datetime.now() + cooldown_time_delta
     max_sanity_check = int((100000/max_keys)/2)
     sanity_check = max_sanity_check+1
     while True:
+        diff = next_cooldown_time - datetime.now()
+        if diff.seconds <= 0:
+            time.sleep(sleep_time)
+            next_cooldown_time = datetime.now() + cooldown_time_delta
         keys_t = keygen(max_keys)
         process(keys_t)
         if sanity_check > max_sanity_check:
@@ -195,7 +202,7 @@ if __name__ == '__main__':
     sanity_2_s = f.readline().strip()
     f.close()
     print('sanities: ' + sanity_1_s + ' ' + sanity_2_s)
-    print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+    print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     while cpu < max_processes:
         print('thread spawned: ' + str(cpu))
         cpu = cpu + 1
@@ -206,11 +213,9 @@ if __name__ == '__main__':
         print(
             '\r '
             + datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-            + ' Evictions: ' + str(stats.get(b'evictions'))
-            + ' Reclaimed: ' + str(stats.get(b'reclaimed'))
             + ' Connections: ' + str(stats.get(b'curr_connections'))
             + ' Misses: ' + str(stats.get(b'get_misses'))
             + ' MPS: ' + str(round(stats.get(b'get_misses') / stats.get(b'uptime'), 2)), end=' ')
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        time.sleep(5)
+        time.sleep(15)
