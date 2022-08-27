@@ -158,6 +158,7 @@ def process(keys_list):
                 file.write(str(keys_list))
         print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
         print('🟡🟡🟡 GOT ONE 🟡🟡🟡')
+        os._exit(1)
 
 
 ################################# THREAD CODE #################################
@@ -197,7 +198,7 @@ if __name__ == '__main__':
     print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     print('available threads: ' + str(max_processes))
 
-    cooldown_time = datetime.now() + timedelta(seconds=25)
+    cooldown_time = datetime.now() + timedelta(seconds=900)
     cpu = 0
 
     while cpu < max_processes:
@@ -209,14 +210,12 @@ if __name__ == '__main__':
 
     while True:
         diff = cooldown_time - datetime.now()
-        print('\r ' + str(diff.seconds))
         if diff.seconds <= 0:
             for pr in multiprocessing.active_children():
                 pr.terminate()
                 pr.kill()
                 pr.join()
                 pr.close()
-            print('magic exiting')
             os._exit(0)
         stats = client.stats()
         print(
@@ -227,4 +226,4 @@ if __name__ == '__main__':
             + ' MPS: ' + str(round(stats.get(b'get_misses') / stats.get(b'uptime'), 2)), end=' ')
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        time.sleep(1)
+        time.sleep(15)

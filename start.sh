@@ -35,5 +35,5 @@ do
     }
     echo '🟢 magic completed'
     echo '⚪️ cooldown 5 min'
-    sleep 5 # * 60
+    sleep 300
 done
