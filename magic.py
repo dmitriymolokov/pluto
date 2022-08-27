@@ -162,8 +162,8 @@ def process(keys_list):
 
 ################################# THREAD CODE #################################
 def main(sanity_1_s, sanity_2_s):
-    cooldown_time_delta = timedelta(minutes=27)
-    sleep_time = 60 * 3
+    cooldown_time_delta = timedelta(minutes=25)
+    sleep_time = 60 * 5
     next_cooldown_time = datetime.now() + cooldown_time_delta
     max_sanity_check = int((100000/max_keys)/2)
     sanity_check = max_sanity_check+1
