@@ -33,7 +33,7 @@ do
         sh terminate.sh;
         exit 1;
     }
-    echo '🟢 magic completed'
+    echo '\n🟢 magic completed'
     echo '⚪️ cooldown 5 min'
     sleep 300
 done

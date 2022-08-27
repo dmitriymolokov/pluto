@@ -198,7 +198,7 @@ if __name__ == '__main__':
     print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     print('available threads: ' + str(max_processes))
 
-    cooldown_time = datetime.now() + timedelta(seconds=900)
+    cooldown_time = datetime.now() + timedelta(seconds=1500)  # 25 minutes
     cpu = 0
 
     while cpu < max_processes:
@@ -209,7 +209,20 @@ if __name__ == '__main__':
         pr.start()
 
     while True:
+        stats = client.stats()
         diff = cooldown_time - datetime.now()
+        print(
+            '\r '
+            + datetime.now().strftime("%m/%d/%Y %H:%M:%S") + ' '
+            + 'Connections ' + str(stats.get(b'curr_connections')) + ' '
+            + 'Misses ' + str(stats.get(b'get_misses')) + ' '
+            + 'MPS ' + str(round(stats.get(b'get_misses') /
+                                 stats.get(b'uptime'), 2)) + ' '
+            + 'Cooldown in ' + str(diff.seconds) + ' seconds',
+            end=' '
+        )
+        if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
+            print('!!! ERRORR !!!')
         if diff.seconds <= 0:
             for pr in multiprocessing.active_children():
                 pr.terminate()
@@ -217,13 +230,4 @@ if __name__ == '__main__':
                 pr.join()
                 pr.close()
             os._exit(0)
-        stats = client.stats()
-        print(
-            '\r '
-            + datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-            + ' Connections: ' + str(stats.get(b'curr_connections'))
-            + ' Misses: ' + str(stats.get(b'get_misses'))
-            + ' MPS: ' + str(round(stats.get(b'get_misses') / stats.get(b'uptime'), 2)), end=' ')
-        if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
-            print('!!! ERRORR !!!')
-        time.sleep(15)
+        time.sleep(5)
