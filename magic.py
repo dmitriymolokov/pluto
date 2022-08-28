@@ -27,7 +27,7 @@ from datetime import datetime, timedelta
 from pymemcache.client import base
 
 client = base.Client(('localhost', 11211))
-max_processes = int(multiprocessing.cpu_count() / 4 * 2)
+max_processes = int(multiprocessing.cpu_count() / 4 * 3)
 max_keys = 32
 sanity_1_s = ''
 sanity_2_s = ''
