@@ -27,7 +27,7 @@ from datetime import datetime, timedelta
 from pymemcache.client import base
 
 client = base.Client(('localhost', 11211))
-max_processes = int(multiprocessing.cpu_count() / 4 * 3)
+max_processes = int(multiprocessing.cpu_count() / 4 * 2)
 max_keys = 32
 sanity_1_s = ''
 sanity_2_s = ''
@@ -198,7 +198,8 @@ if __name__ == '__main__':
     print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     print('available threads: ' + str(max_processes))
 
-    cooldown_time = datetime.now() + timedelta(seconds=1500)  # 25 minutes
+    cooldown_seconds = 1500  # 25 min
+    cooldown_time = datetime.now() + timedelta(seconds=cooldown_seconds)
     cpu = 0
 
     while cpu < max_processes:
@@ -223,11 +224,11 @@ if __name__ == '__main__':
         )
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        if diff.seconds <= 0:
+        if diff.seconds < 0 or diff.seconds > cooldown_seconds:
             for pr in multiprocessing.active_children():
                 pr.terminate()
                 pr.kill()
                 pr.join()
                 pr.close()
             os._exit(0)
-        time.sleep(5)
+        time.sleep(15)
