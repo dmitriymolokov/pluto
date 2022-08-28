@@ -25,15 +25,32 @@ python3 fill.py || {
     exit 1;
 }
 
-while true
-do
-    echo '⚪️ starting magic' 
-    python3 magic.py || {
-        echo '🔴 python3 magic.py failed'; 
-        sh terminate.sh;
-        exit 1;
-    }
-    echo '\n🟢 magic completed'
-    echo '⚪️ cooldown 3 min'
-    sleep 180
-done
+# start magic
+echo '⚪️ starting magic' 
+python3 magic.py || {
+    echo '🔴 python3 magic.py failed'; 
+    sh terminate.sh;
+    exit 1;
+}
+
+# while true
+# do
+#     echo '⚪️ starting magic' 
+#     timeout 20s python3 magic.py || {
+#         echo '🔴 python3 magic.py failed'; 
+#         sh terminate.sh;
+#         exit 1;
+#     }
+#     echo '\n🟢 magic completed'
+#     echo '⚪️ cooldown 3 min'
+#     sleep 180
+# done
+
+# while true
+# do
+#     echo '⚪️ starting magic' 
+#     timeout --foreground 20s python3 magic.py
+#     echo '\n🟢 magic completed'
+#     echo '⚪️ cooldown 3 min'
+#     sleep 18
+# done
