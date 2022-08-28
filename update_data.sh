@@ -1,8 +1,8 @@
 # clean up
 clean_useless_files() {
     echo '⚪️ removing old files if exist...'
-    rm blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz
-    rm blockchair_bitcoin_addresses_and_balance_LATEST.tsv
+    rm -rf blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz
+    rm -rf blockchair_bitcoin_addresses_and_balance_LATEST.tsv
     echo '🟢 removed old files'
 }
 
@@ -30,7 +30,7 @@ sh terminate.sh
 # replace data.tsv
 # remove previous data.txt
 echo '⚪️ removing previous data.tsv...'
-rm data.tsv
+rm -rf data.tsv
 echo '🟢 deleted'
 
 # put new data.tsv
