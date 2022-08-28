@@ -12,7 +12,7 @@ sleep 3
 
 # start new memcached
 echo '⚪️ starting new memcached instances'
-memcached -n 70 -m 1639 -M -t 12 -d || {
+memcached -n 70 -m 2048 -M -t 12 -d || {
     echo '🔴 memcached -n 70 -m 1639 -M -t 12 -d failed';
     exit 1;
 }
