@@ -24,8 +24,8 @@ import time
 
 DATABASE_PATH = r'data.tsv'
 
-sanity_1_i = random.randint(0, 9630000)
-sanity_2_i = random.randint(0, 9630000)
+sanity_1_i = random.randint(0, 9360000)
+sanity_2_i = random.randint(0, 9360000)
 sanity_1_s = ''
 sanity_1_s = ''
 

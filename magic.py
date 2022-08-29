@@ -157,7 +157,6 @@ def process(keys_list):
                 file.write(str(keys_list))
         print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
         print('🟡🟡🟡 GOT ONE 🟡🟡🟡')
-        os._exit(1)
 
 
 ################################# THREAD CODE #################################
@@ -188,7 +187,7 @@ def main(sanity_1_s, sanity_2_s):
 ################################# ENTRY, DATA LOAD, THREAD START #################################
 if __name__ == '__main__':
 
-    max_processes = int(multiprocessing.cpu_count() / 8 * 7)
+    max_processes = int(multiprocessing.cpu_count() / 4 * 3)
 
     f = open('sanity.txt', 'r')
     sanity_1_s = f.readline().strip()
@@ -213,11 +212,12 @@ if __name__ == '__main__':
         print(
             '\r '
             + datetime.now().strftime("%m/%d/%Y %H:%M:%S") + ' '
-            + 'Misses ' + str(stats.get(b'get_misses')) + ' '
+            + 'Checked ' + str(stats.get(b'get_misses')) + ' '
             + 'MPS ' + str(round(stats.get(b'get_misses') /
                                  stats.get(b'uptime'), 2)) + ' ',
             end=' '
         )
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        time.sleep(15)
+            os._exit(0)
+        time.sleep(60)
