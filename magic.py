@@ -27,7 +27,6 @@ from datetime import datetime  # timedelta
 from pymemcache.client import base
 
 client = base.Client(('localhost', 11211))
-max_processes = int(multiprocessing.cpu_count() / 4 * 3)
 max_keys = 32
 sanity_1_s = ''
 sanity_2_s = ''
@@ -189,6 +188,8 @@ def main(sanity_1_s, sanity_2_s):
 ################################# ENTRY, DATA LOAD, THREAD START #################################
 if __name__ == '__main__':
 
+    max_processes = int(multiprocessing.cpu_count() / 8 * 7)
+
     f = open('sanity.txt', 'r')
     sanity_1_s = f.readline().strip()
     sanity_2_s = f.readline().strip()
@@ -198,8 +199,6 @@ if __name__ == '__main__':
     print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     print('available threads: ' + str(max_processes))
 
-    # cooldown_seconds = 900  # 15 min
-    # cooldown_time = datetime.now() + timedelta(seconds=cooldown_seconds)
     cpu = 0
 
     while cpu < max_processes:
@@ -211,24 +210,14 @@ if __name__ == '__main__':
 
     while True:
         stats = client.stats()
-        # diff = cooldown_time - datetime.now()
         print(
             '\r '
             + datetime.now().strftime("%m/%d/%Y %H:%M:%S") + ' '
-            + 'Connections ' + str(stats.get(b'curr_connections')) + ' '
             + 'Misses ' + str(stats.get(b'get_misses')) + ' '
             + 'MPS ' + str(round(stats.get(b'get_misses') /
                                  stats.get(b'uptime'), 2)) + ' ',
-            # + 'Cooldown in ' + str(diff.seconds) + ' seconds',
             end=' '
         )
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        # if diff.seconds < 0 or diff.seconds > cooldown_seconds:
-        #     for pr in multiprocessing.active_children():
-        #         pr.terminate()
-        #         pr.kill()
-        #         pr.join()
-        #         pr.close()
-        #     os._exit(0)
         time.sleep(15)

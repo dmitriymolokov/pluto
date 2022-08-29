@@ -1,8 +1,8 @@
 # print found results 
 if [ -s pluto.txt ]; then
-     echo "🟢🟢🟢"
+     echo "🟡🟡🟡🟡🟡🟡🟡"
      cat pluto.txt
-     echo "🟢🟢🟢"
+     echo "🟡🟡🟡🟡🟡🟡🟡"
 fi
 
 sh terminate.sh
@@ -32,25 +32,3 @@ python3 magic.py || {
     sh terminate.sh;
     exit 1;
 }
-
-# while true
-# do
-#     echo '⚪️ starting magic' 
-#     timeout 20s python3 magic.py || {
-#         echo '🔴 python3 magic.py failed'; 
-#         sh terminate.sh;
-#         exit 1;
-#     }
-#     echo '\n🟢 magic completed'
-#     echo '⚪️ cooldown 3 min'
-#     sleep 180
-# done
-
-# while true
-# do
-#     echo '⚪️ starting magic' 
-#     timeout --foreground 20s python3 magic.py
-#     echo '\n🟢 magic completed'
-#     echo '⚪️ cooldown 3 min'
-#     sleep 18
-# done
