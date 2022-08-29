@@ -24,9 +24,6 @@ gunzip blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz || {
 }
 echo '🟢 gunziped'
 
-# terminal current memcached
-sh terminate.sh
-
 # replace data.tsv
 # remove previous data.txt
 echo '⚪️ removing previous data.tsv...'
