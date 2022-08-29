@@ -194,8 +194,10 @@ if __name__ == '__main__':
     sanity_2_s = f.readline().strip()
     f.close()
 
+    start_time = datetime.now()
+
     print('sanities: ' + sanity_1_s + ' ' + sanity_2_s)
-    print(datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
+    print(start_time.strftime("%m/%d/%Y %H:%M:%S"))
     print('available threads: ' + str(max_processes))
 
     cpu = 0
@@ -209,10 +211,12 @@ if __name__ == '__main__':
 
     while True:
         stats = client.stats()
+        delta = datetime.now() - start_time
         print(
             '\r '
             + datetime.now().strftime("%m/%d/%Y %H:%M:%S") + ' '
-            + 'Checked ' + str(stats.get(b'get_misses')) + ' '
+            + 'Uptime: ' + str(delta).split(".")[0] + ' '
+            + 'Total ' + str(stats.get(b'get_misses')) + ' '
             + 'MPS ' + str(round(stats.get(b'get_misses') /
                                  stats.get(b'uptime'), 2)) + ' ',
             end=' '
@@ -220,4 +224,4 @@ if __name__ == '__main__':
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
             os._exit(0)
-        time.sleep(60)
+        time.sleep(36.9)
