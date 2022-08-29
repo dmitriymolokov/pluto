@@ -85,7 +85,7 @@ def keygen(num_keys):
         address = base58(address_hex)
 
         # PUBLIC COMPD
-        #private_hex = codecs.decode(private, 'hex')
+        # private_hex = codecs.decode(private, 'hex')
         key_hex = codecs.encode(key, 'hex')
         # Get X from the key (first half)
         key_string = key_hex.decode('utf-8')
@@ -212,7 +212,12 @@ if __name__ == '__main__':
     while True:
         stats = client.stats()
         delta = datetime.now() - start_time
-        if delta.seconds > 15:
+        if delta.seconds > 23:  # * 60 * 60:
+            for pr in multiprocessing.active_children():
+                pr.terminate()
+                pr.kill()
+                pr.join()
+                pr.close()
             os._exit(0)
         print(
             '\r '
@@ -226,3 +231,4 @@ if __name__ == '__main__':
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
         time.sleep(1)
+        # time.sleep(36.9)
