@@ -25,10 +25,13 @@ python3 fill.py || {
     exit 1;
 }
 
-# start magic
-echo '⚪️ starting magic' 
-python3 magic.py || {
-    echo '🔴 python3 magic.py failed'; 
-    sh terminate.sh;
-    exit 1;
-}
+while true
+do
+    echo '⚪️ starting magic' 
+    python3 magic.py || {
+        echo '🔴 python3 magic.py failed'; 
+        sh terminate.sh;
+        exit 1;
+    }
+    sh update_data.sh
+done

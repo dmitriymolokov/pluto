@@ -212,6 +212,8 @@ if __name__ == '__main__':
     while True:
         stats = client.stats()
         delta = datetime.now() - start_time
+        if delta.seconds > 15:
+            os._exit(0)
         print(
             '\r '
             + datetime.now().strftime("%m/%d/%Y %H:%M:%S") + ' '
@@ -223,5 +225,4 @@ if __name__ == '__main__':
         )
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-            os._exit(0)
-        time.sleep(36.9)
+        time.sleep(1)
