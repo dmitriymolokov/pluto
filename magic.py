@@ -212,7 +212,7 @@ if __name__ == '__main__':
     while True:
         stats = client.stats()
         delta = datetime.now() - start_time
-        if delta.seconds > 12 * 60 * 60:  # every 12 hours
+        if delta.seconds > 11 * 60 * 60:  # every 12 hours
             for pr in multiprocessing.active_children():
                 pr.terminate()
                 pr.kill()
@@ -231,4 +231,4 @@ if __name__ == '__main__':
         )
         if stats.get(b'evictions') > 0 or stats.get(b'reclaimed') > 0:
             print('!!! ERRORR !!!')
-        time.sleep(60)
+        time.sleep(69.3)

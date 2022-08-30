@@ -24,8 +24,8 @@ import time
 
 DATABASE_PATH = r'data.tsv'
 
-sanity_1_i = random.randint(0, 9360000)
-sanity_2_i = random.randint(0, 9360000)
+sanity_1_i = random.randint(0, 3960000)
+sanity_2_i = random.randint(0, 3960000)
 sanity_1_s = ''
 sanity_1_s = ''
 
@@ -48,7 +48,7 @@ while True:
         balance = parts[1]
         if address.startswith('1') == False:
             continue
-        if int(balance) < 100000:
+        if int(balance) < 1000000:
             continue
         alist.append(address)
         i_add += 1
