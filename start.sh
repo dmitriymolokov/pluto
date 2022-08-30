@@ -14,8 +14,8 @@ while true
 do
 
     echo '⚪️ starting new memcached instances'
-    memcached -n 70 -m 1024 -M -t 24 -d || {
-        echo '🔴 memcached -n 70 -m 1024 -M -t 24 -d failed';
+    memcached -n 70 -m 2048 -M -t 12 -d || {
+        echo '🔴 memcached -n 70 -m 2048 -M -t 12 -d failed';
         exit 1;
     }
 
