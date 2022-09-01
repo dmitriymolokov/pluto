@@ -162,7 +162,7 @@ def process(keys_list):
 
 ################################# THREAD CODE #################################
 def main(sanity_1_s, sanity_2_s):
-    max_sanity_check = int((100000/max_keys)/2)
+    max_sanity_check = int((100000 / max_keys) / 2)
     sanity_check = max_sanity_check+1
     while True:
         keys_t = keygen(max_keys)
@@ -213,14 +213,6 @@ if __name__ == '__main__':
     while True:
         stats = client.stats()
         delta = datetime.now() - start_time
-        if delta.seconds > 11 * 60 * 60:  # every 12 hours
-            for pr in multiprocessing.active_children():
-                pr.terminate()
-                pr.kill()
-                pr.join()
-                pr.close()
-            print('🟢 Time to update addresses database \n')
-            os._exit(0)
         print(
             '\r '
             + datetime.now().strftime("%m/%d/%Y %H:%M:%S") + ' '
