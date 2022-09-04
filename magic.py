@@ -188,7 +188,7 @@ def main(sanity_1_s, sanity_2_s):
 ################################# ENTRY, DATA LOAD, THREAD START #################################
 if __name__ == '__main__':
 
-    max_processes = int(multiprocessing.cpu_count() / 4 * 3)
+    max_processes = int(multiprocessing.cpu_count() - 1)
 
     f = open('sanity.txt', 'r')
     sanity_1_s = f.readline().strip()
