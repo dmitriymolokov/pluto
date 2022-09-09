@@ -5,6 +5,8 @@ ID=fhmukgk37ig5dehv3a50
 echo 'the instance is being stop'
 yc compute instance stop $ID
 
+sleep 30
+
 echo 'starting the instance...'
 yc compute instance start $ID
 
