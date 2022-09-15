@@ -11,8 +11,8 @@ sleep 61
 echo 'starting the instance...'
 yc compute instance start $ID
 
-echo 'sleep 10'
-sleep 10
+echo 'sleep 20'
+sleep 20
 
 echo 'connecting to console...'
 yc compute connect-to-serial-port --instance-id $ID --user admin --ssh-key /Users/christopher/.ssh/id_ed25519
